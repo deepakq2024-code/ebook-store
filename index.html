@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Deepak E-Books | Digital Notes & Guides</title>
+  <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js"></script>
+  <style>
+    :root {
+      --bg: #0a0a0a;
+      --card: #141414;
+      --border: #262626;
+      --green: #22c55e;
+      --green-dark: #16a34a;
+      --text: #fafafa;
+      --muted: #a3a3a3;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; background: var(--bg); color: var(--text); line-height: 1.5; }
+    a { color: inherit; text-decoration: none; }
+    .container { max-width: 1100px; margin: 0 auto; padding: 0 16px; }
+    header { border-bottom: 1px solid var(--border); padding: 16px 0; position: sticky; top: 0; background: rgba(10,10,10,0.9); backdrop-filter: blur(10px); z-index: 100; }
+    .header-inner { display: flex; justify-content: space-between; align-items: center; }
+    .logo { font-size: 20px; font-weight: 700; }
+    .logo span { color: var(--green); }
+    nav a { margin-left: 20px; color: var(--muted); font-size: 14px; }
+    nav a:hover { color: var(--text); }
+    .hero { padding: 60px 0 40px; text-align: center; }
+    .hero h1 { font-size: 36px; font-weight: 700; margin-bottom: 12px; }
+    .hero p { color: var(--muted); max-width: 500px; margin: 0 auto; }
+    .products { padding: 20px 0 60px; }
+    .section-title { font-size: 22px; margin-bottom: 20px; }
+    .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 16px; }
+    .card { background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 20px; transition: border-color 0.2s; }
+    .card:hover { border-color: #404040; }
+    .card-icon { font-size: 32px; margin-bottom: 12px; }
+    .card h3 { font-size: 18px; margin-bottom: 6px; }
+    .card p { color: var(--muted); font-size: 14px; margin-bottom: 16px; min-height: 42px; }
+    .price { font-size: 24px; font-weight: 700; color: var(--green); margin-bottom: 16px; }
+    .btn { width: 100%; padding: 12px; border: none; border-radius: 10px; font-size: 15px; font-weight: 600; cursor: pointer; }
+    .btn-primary { background: var(--green); color: #000; }
+    .btn-primary:hover { background: var(--green-dark); }
+    .modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.8); z-index: 200; align-items: center; justify-content: center; padding: 16px; }
+    .modal.show { display: flex; }
+    .modal-content { background: var(--card); border-radius: 20px; padding: 28px; max-width: 380px; width: 100%; text-align: center; border: 1px solid var(--border); }
+    .modal h3 { margin-bottom: 4px; }
+    .modal .amount { font-size: 28px; font-weight: 700; color: var(--green); margin: 12px 0; }
+    #qrcode { background: #fff; padding: 12px; border-radius: 12px; display: inline-block; margin: 16px 0; }
+    .upi-box { background: #1a1a1a; padding: 12px; border-radius: 10px; font-size: 13px; margin: 12px 0; text-align: left; }
+    .apps { display: flex; gap: 8px; justify-content: center; margin: 16px 0; flex-wrap: wrap; }
+    .app-btn { padding: 8px 14px; border-radius: 8px; font-size: 13px; background: #262626; color: #fff; border: 1px solid #333; }
+    .app-btn:hover { background: #333; }
+    .close-btn { background: transparent; border: 1px solid #333; color: var(--muted); padding: 10px 20px; border-radius: 8px; cursor: pointer; margin-top: 8px; }
+    .note { font-size: 12px; color: #666; margin-top: 12px; }
+    footer { border-top: 1px solid var(--border); padding: 30px 0; text-align: center; color: var(--muted); font-size: 13px; }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="container header-inner">
+      <div class="logo">Deepak<span>Books</span></div>
+      <nav>
+        <a href="#products">Products</a>
+        <a href="#how">How to Pay</a>
+      </nav>
+    </div>
+  </header>
+  <section class="hero">
+    <div class="container">
+      <h1>Digital E-Books & Notes</h1>
+      <p>B.Tech CSE students ke liye quality notes. UPI se turant payment, instant access.</p>
+    </div>
+  </section>
+  <section class="products" id="products">
+    <div class="container">
+      <h2 class="section-title">Available E-Books</h2>
+      <div class="grid" id="productGrid"></div>
+    </div>
+  </section>
+  <section id="how" style="padding: 20px 0 40px;">
+    <div class="container">
+      <h2 class="section-title">Payment kaise karein</h2>
+      <div class="grid">
+        <div class="card">
+          <div class="card-icon">1</div>
+          <h3>Book select karo</h3>
+          <p>Jo book chahiye uspe "Buy Now" dabao.</p>
+        </div>
+        <div class="card">
+          <div class="card-icon">2</div>
+          <h3>QR scan karo</h3>
+          <p>PhonePe, GPay ya Paytm se QR scan karke pay karo.</p>
+        </div>
+        <div class="card">
+          <div class="card-icon">3</div>
+          <h3>Screenshot bhejo</h3>
+          <p>Payment ke baad WhatsApp pe screenshot bhejo, e-book mil jayega.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+  <footer>
+    <div class="container">
+      <p>© 2026 DeepakBooks · Payments via UPI · deepak3104@ptyes</p>
+      <p style="margin-top:8px;">Contact: WhatsApp 9792703104</p>
+    </div>
+  </footer>
+  <div class="modal" id="modal">
+    <div class="modal-content">
+      <h3 id="modalTitle">Pay for E-Book</h3>
+      <div class="amount" id="modalAmount">₹49</div>
+      <div id="qrcode"></div>
+      <div class="upi-box">
+        <strong>UPI ID:</strong> deepak3104@ptyes<br>
+        <strong>Name:</strong> Deepak Kushwaha<br>
+        <strong>Note:</strong> <span id="modalNote">Order</span>
+      </div>
+      <div class="apps" id="appLinks"></div>
+      <button class="close-btn" onclick="closeModal()">Close</button>
+      <p class="note">Payment ke baad WhatsApp pe screenshot bhejo: 9792703104</p>
+    </div>
+  </div>
+  <script>
+    const UPI = "deepak3104@ptyes";
+    const NAME = "Deepak Kushwaha";
+    const products = [
+      { id: "java", title: "Java Programming Complete Guide", desc: "Core Java + OOP + Projects notes for B.Tech", price: 49, icon: "☕" },
+      { id: "dsa", title: "DSA Master Notes", desc: "Data Structures & Algorithms with examples", price: 79, icon: "📊" },
+      { id: "web", title: "Web Development Bundle", desc: "HTML, CSS, JavaScript, React basics", price: 99, icon: "🌐" },
+      { id: "dbms", title: "DBMS Complete Notes", desc: "SQL, Normalization, Transactions", price: 59, icon: "🗄️" },
+      { id: "os", title: "Operating Systems Notes", desc: "Processes, Threads, Memory Management", price: 59, icon: "💻" },
+      { id: "python", title: "Python for Beginners", desc: "Basics to Projects with examples", price: 69, icon: "🐍" }
+    ];
+    const grid = document.getElementById("productGrid");
+    products.forEach(p => {
+      grid.innerHTML += `<div class="card"><div class="card-icon">${p.icon}</div><h3>${p.title}</h3><p>${p.desc}</p><div class="price">₹${p.price}</div><button class="btn btn-primary" onclick="openPayment('${p.id}', '${p.title}', ${p.price})">Buy Now</button></div>`;
+    });
+    function openPayment(id, title, price) {
+      const note = "EB-" + id.toUpperCase() + "-" + Date.now().toString().slice(-6);
+      const amount = price.toFixed(2);
+      const upiUri = `upi://pay?pa=${UPI}&pn=${encodeURIComponent(NAME)}&am=${amount}&cu=INR&tn=${note}`;
+      document.getElementById("modalTitle").textContent = title;
+      document.getElementById("modalAmount").textContent = "₹" + price;
+      document.getElementById("modalNote").textContent = note;
+      const qrContainer = document.getElementById("qrcode");
+      qrContainer.innerHTML = "";
+      QRCode.toCanvas(qrContainer, upiUri, { width: 200, margin: 1 });
+      const apps = document.getElementById("appLinks");
+      apps.innerHTML = `<a class="app-btn" href="tez://upi/pay?pa=${UPI}&pn=${encodeURIComponent(NAME)}&am=${amount}&cu=INR&tn=${note}">GPay</a><a class="app-btn" href="phonepe://pay?pa=${UPI}&pn=${encodeURIComponent(NAME)}&am=${amount}&cu=INR&tn=${note}">PhonePe</a><a class="app-btn" href="paytmmp://pay?pa=${UPI}&pn=${encodeURIComponent(NAME)}&am=${amount}&cu=INR&tn=${note}">Paytm</a>`;
+      document.getElementById("modal").classList.add("show");
+    }
+    function closeModal() { document.getElementById("modal").classList.remove("show"); }
+    document.getElementById("modal").addEventListener("click", (e) => { if (e.target.id === "modal") closeModal(); });
+  </script>
+</body>
+</html>
